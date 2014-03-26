@@ -1,0 +1,6 @@
+</div>
+<div class="footer">
+    <p>Copyright &copy; 2014 - 广东工业大学 2011 级计科六班</p>
+</div>
+</body>
+</html>

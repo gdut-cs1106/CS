@@ -1,3 +1,5 @@
+<? $this->load->view('header'); ?>
+
 <!--这里是最上面的小横条，用来放logo和一些小东西-->
 <div class="navbar navbar-static-top">
 	<div class="navbar-inner">
@@ -22,3 +24,5 @@
       </form>
 	</div>
 </div>
+
+<? $this->load->view('footer'); ?>

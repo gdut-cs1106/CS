@@ -16,10 +16,13 @@ class Login extends CI_Controller {
      */
     public function login() {
         //验证 过滤表单
-        $this->form_validation->set_rules('email','Email','required|valid_email');
-        $this->form_validation->set_rules('password','Password','required');
+        $this->form_validation->set_rules('stu_id','学号','required|numeric|exact_length[10]');
+        $this->form_validation->set_rules('password','密码','required');
         if($this->form_validation->run() == FALSE){
-            //表单验证失败，提示用户名或密码不正确
+            //表单验证失败，提示用户名或密码不正确,利用Ajax技术
+            $info = "<res><mes>".validation_errors()."</mes></res>";
+            echo $info;
+            return FALSE;
         }else{
             //$this->user_model->get_uid()判断是否存在该用户
             $email = $_POST['email'];
@@ -27,10 +30,14 @@ class Login extends CI_Controller {
             $uid = $this->user_model->get_uid($email,$password);
             if($uid == 0){
                 //不存在该用户，提示用户名或密码不正确
+                $info = "<res><mes>用户名或密码不正确</mes></res>";
+                echo $info;
+                return FALSE;
             }else{
-                //验证成功 保存session 跳转redirect()  是否还需要is_logined
-                $this->session->set_userdate(array("uid"=>$uid));
+                //验证成功 保存session 跳转redirect()
+                $this->session->set_userdate(array("uid"=>$uid,"is_logined"=>TRUE));
                 redirect('home');
+                return TRUE;
             }
         }
     }

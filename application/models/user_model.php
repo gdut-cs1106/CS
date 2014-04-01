@@ -140,7 +140,7 @@ class User_model extends CI_model {
 	
 		$query = $this->db->get_where('users',array('stu_id' => $stu_id,'password' => sha1($password)));
 		
-		if $query->num_rows == 1 )  {
+		if ($query->num_rows == 1 )  {
 			$user = $this->db->get_where('users',array('stu_id' => $stu_id))->row();
 			return $user->uid;
 		} else

@@ -9,8 +9,7 @@ class Login extends CI_Controller {
         $this->load->model('user_model');
     }
     public function index(){
-        $data['title'] = "登录";
-		$this->load->view('login',$data);
+        $this->load->view('login');
     }
     /**
      * @synopsis  用户登录，完成后跳转到之前请求的页面
@@ -23,7 +22,7 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('pwd','密码','required');
         if($this->form_validation->run() == FALSE){
             //表单验证失败，提示用户名或密码不正确,利用Ajax技术
-            $info = "<res><mes>用户名或密码不正确</mes></res>";
+            $info = "<res><mes>".validation_errors()."</mes></res>";
             echo $info;
             return FALSE;
         }else{

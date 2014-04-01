@@ -8,7 +8,9 @@ class Login extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('user_model');
     }
-
+    public function index(){
+        $this->load->view('login');
+    }
     /**
      * @synopsis  用户登录，完成后跳转到之前请求的页面
      *

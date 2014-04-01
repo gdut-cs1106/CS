@@ -9,7 +9,7 @@ class Login extends CI_Controller {
         $this->load->model('user_model');
     }
     public function index(){
-        $this->load->view('login');
+        $this->load->views('login');
     }
     /**
      * @synopsis  用户登录，完成后跳转到之前请求的页面
@@ -18,8 +18,8 @@ class Login extends CI_Controller {
      */
     public function login() {
         //验证 过滤表单
-        $this->form_validation->set_rules('stu_id','学号','required|numeric|exact_length[10]');
-        $this->form_validation->set_rules('password','密码','required');
+        $this->form_validation->set_rules('id','学号','required|numeric|exact_length[10]');
+        $this->form_validation->set_rules('pwd','密码','required');
         if($this->form_validation->run() == FALSE){
             //表单验证失败，提示用户名或密码不正确,利用Ajax技术
             $info = "<res><mes>".validation_errors()."</mes></res>";

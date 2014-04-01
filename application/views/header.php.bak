@@ -7,3 +7,4 @@
     <link rel="stylesheet" href="<?php echo base_url('css/style.css');?>" rel="stylesheet" type="text/css" />
 </head>
 <body style="background-color:#F9F6E7";>
+<!--<div class="container">-->

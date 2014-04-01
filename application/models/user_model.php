@@ -15,9 +15,15 @@ class User_model extends CI_model {
     /**
      * @synopsis 获取所有用户 
      *
-     * @returns  返回一个 Array 包含所有用户
+     * @returns  返回一个 Array 包含所有用户的 stu_id
      */
     public function get_all_users() {
+		$users = $this->db->order_by('uid')
+			->get('users')
+			->result_array();
+			
+		return $users;
+		
     }
 
 
@@ -39,13 +45,18 @@ class User_model extends CI_model {
 
 
     /**
-     * @synopsis  根据 id 返回一个用户
+     * @synopsis  根据 uid 返回一个用户
      *
-     * @param $id  用户 id
+     * @param $uid  用户 uid
      *
      * @returns  一个用户对象 
      */
-    public function get_user_by_id($id) {
+    public function get_user_by_uid($uid) {
+		
+		$user = $this->db->get_where('users',array('uid' => $uid))
+			->result_array();
+			
+		return $user;
     }
 
     /**
@@ -56,6 +67,11 @@ class User_model extends CI_model {
      * @returns  一个用户对象 
      */
     public function get_user_by_stu_id($stu_id) {
+		
+		$user = $this->db->get_where('users',array('stu_id' => $stu_id))
+			->result_array();
+			
+		return $user;
     }
 
     /**
@@ -86,8 +102,50 @@ class User_model extends CI_model {
      * @returns  更新成功返回 true ，否则返回 false 
      */
     public function update_user($user) {
+		
+		
+		$data = array('name' => $user->name,'sex' => $user->sex,'birthday' => $user->birthday ,'email' => $user->email);
+		$where = "uid == '.$uid.'";
+		$this->db->update('users',$data,$where);
+		
+		return ($this->db->affected_rows('users') > 0) ? TRUE : FALSE;
+		
     }
-}
 
+	 /**
+     * @synopsis  根据 uid 修改密码
+     *
+     * @param  $password
+     *
+     * @returns  成功就返回一个用户id 错误返回false
+     */
+	 
+	 public function update_user_password($uid){
+		
+		return $this->db->update('users', array('password' => sha1($password)), array('uid' => $uid));
+	 
+	 
+	 
+	}
+	 
+	 
+	 /**
+     * @synopsis  根据 学号和密码 获得用户id
+     *
+     * @param $stu_id $password
+     *
+     * @returns  成功就返回一个用户id 错误返回false
+     */
+    public function get_uid($stu_id,$password) {
+	
+		$query = $this->db->get_where('users',array('stu_id' => $stu_id,'password' => sha1($password)));
+		
+		if ($query->num_rows == 1 )  {
+			$user = $this->db->get_where('users',array('stu_id' => $stu_id))->row();
+			return $user->uid;
+		} else
+			return false;
+	}
+}
 /* End of file welcom.php */
 /* Location: ./application/models/user_model.php */
